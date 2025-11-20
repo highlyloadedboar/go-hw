@@ -14,7 +14,7 @@ func main() {
 	amount := scanAmount()
 	fmt.Println("Input currency to convert:")
 	dst := scanCurrency()
-	convert(amount, curr, dst)
+	fmt.Print(convert(amount, curr, dst))
 }
 
 func convert(amount float64, scrCurrency string, dstCurrency string) float64 {
