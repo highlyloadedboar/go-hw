@@ -38,7 +38,7 @@ func scanCurrency() string {
 func scanAmount() float64 {
 	amount := 0.0
 	for amount <= 0 {
-		fmt.Println("Input amount more than 0: ")
+		fmt.Println("Input amount more than 0 : ")
 		fmt.Scan(&amount)
 	}
 
