@@ -2,37 +2,43 @@ package main
 
 import "fmt"
 
-const USD_TO_EUR = 0.8531
-const USD_TO_RUB = 81.1276
-const EUR_TO_RUB = USD_TO_RUB / USD_TO_EUR
 const USD = "USD"
 const RUB = "RUB"
 const EUR = "EUR"
 
 func main() {
-	curr := scanCurrency()
+
+	var exchangeRates = map[string]float64{
+		USD: 1.0,
+		EUR: 0.8531,
+		RUB: 81.1276,
+	}
+
+	curr := scanCurrency(&exchangeRates)
 	amount := scanAmount()
 	fmt.Println("Input currency to convert:")
-	dst := scanCurrency()
-	fmt.Print(convert(amount, curr, dst))
+	dst := scanCurrency(&exchangeRates)
+	result := convert(&exchangeRates, amount, curr, dst)
+	fmt.Printf("%.2f %s = %.2f %s\n", amount, curr, result, dst)
 }
 
-func convert(amount float64, scrCurrency string, dstCurrency string) float64 {
-	if scrCurrency == USD && dstCurrency == EUR {
-		return amount * USD_TO_EUR
-	} else if scrCurrency == USD && dstCurrency == RUB {
-		return amount * USD_TO_RUB
-	}
-	return amount * EUR_TO_RUB
+func convert(exchangeRates *map[string]float64, amount float64, srcCurrency string, dstCurrency string) float64 {
+	amountInUSD := amount / (*exchangeRates)[srcCurrency]
+	return amountInUSD * (*exchangeRates)[dstCurrency]
 }
 
-func scanCurrency() string {
+func scanCurrency(exchangeRates *map[string]float64) string {
 	curr := ""
-	for curr != RUB && curr != EUR && curr != USD {
+	for !isValidCurrency(exchangeRates, curr) {
 		fmt.Println("Input currency: RUB, EUR, USD")
 		fmt.Scan(&curr)
 	}
 	return curr
+}
+
+func isValidCurrency(exchangeRates *map[string]float64, curr string) bool {
+	_, exists := (*exchangeRates)[curr]
+	return exists
 }
 
 func scanAmount() float64 {
@@ -41,6 +47,5 @@ func scanAmount() float64 {
 		fmt.Println("Input amount more than 0: ")
 		fmt.Scan(&amount)
 	}
-
 	return amount
 }
