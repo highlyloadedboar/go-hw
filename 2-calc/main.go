@@ -5,6 +5,7 @@ import (
 	"slices"
 	"strconv"
 	"strings"
+	"unicode"
 )
 
 const (
@@ -19,31 +20,39 @@ func main() {
 	var operation string
 
 	for !slices.Contains(actions, strings.ToUpper(operation)) {
-		fmt.Printf("Введите одну из операций %v!\nДля выополнения выбранной операции введите любую букву\n", actions)
+		fmt.Printf("Введите одну из операций %v!\n", actions)
 		fmt.Scan(&operation)
 	}
 
-	nums := []int{}
-	for {
-		var input string
-		fmt.Scan(&input)
-		num, err := strconv.Atoi(strings.TrimSpace(input))
+	operation = strings.ToUpper(operation)
 
-		if err != nil {
-			break
-		}
-		nums = append(nums, num)
+	fmt.Println("Введите числа через запятую, затем нажмите enter, чтобы выполнить", operation)
+
+	var nums string
+	fmt.Scan(&nums)
+	f := func(c rune) bool {
+		return !unicode.IsNumber(c)
 	}
 
+	fields := strings.FieldsFunc(nums, f)
+	fmt.Println(fields)
+
+	numFields := make([]int, 0, len(fields))
+
+	for _, v := range fields {
+		num, _ := strconv.Atoi(v)
+		numFields = append(numFields, num)
+	}
+	fmt.Println(numFields)
 	if len(nums) > 0 {
 
 		switch operation {
 		case AVG:
-			fmt.Println("Average = ", getAvg(nums))
+			fmt.Println("Average = ", getAvg(numFields))
 		case SUM:
-			fmt.Println("Sum = ", getSum(nums))
+			fmt.Println("Sum = ", getSum(numFields))
 		case MED:
-			fmt.Println("Med = ", getMed(nums))
+			fmt.Println("Med = ", getMed(numFields))
 		default:
 			fmt.Println("Wrong operation!")
 		}
