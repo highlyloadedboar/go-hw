@@ -1,7 +1,7 @@
 package bins
 
 import (
-	"3-sruct/files"
+	files "3-struct/file"
 	"fmt"
 	"time"
 )
