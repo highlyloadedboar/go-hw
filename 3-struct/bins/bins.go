@@ -1,8 +1,6 @@
 package bins
 
 import (
-	files "3-struct/file"
-	"fmt"
 	"time"
 )
 
@@ -34,14 +32,4 @@ func newBinList() *BinList {
 
 func (list *BinList) appendBin(bin *Bin) {
 	list.binList = append(list.binList, *bin)
-}
-
-func main() {
-	bin := newBin(
-		"1", true, time.Now().Local(), "name",
-	)
-	fmt.Println(bin.name)
-
-	files.ReadFile()
-
 }
