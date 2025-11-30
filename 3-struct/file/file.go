@@ -3,6 +3,7 @@ package file
 import (
 	"errors"
 	"os"
+	"strings"
 )
 
 func ReadFile(fileName string) (string, error) {
@@ -34,4 +35,8 @@ func WriteJsonToFile(fileName string, content []byte) (string, error) {
 
 	return fileName, nil
 
+}
+
+func IsJsonFile(fileName string) bool {
+	return strings.Contains(fileName, ".json")
 }

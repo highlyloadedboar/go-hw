@@ -19,12 +19,15 @@ func SaveBin(fileName string, bin *bins.Bin) (string, error) {
 	return fileName, nil
 }
 
-func GetAllBins(fileName string) (string, error) {
+func GetAllBins(fileName string) ([]*bins.Bin, error) {
 	bytes, err := os.ReadFile(fileName)
 
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	return string(bytes), nil
+	var bins []*bins.Bin
+	json.Unmarshal(bytes, &bins)
+
+	return bins, nil
 }
