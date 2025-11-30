@@ -5,10 +5,10 @@ import (
 )
 
 type Bin struct {
-	id        string
-	private   bool
-	createdAt time.Time
-	name      string
+	Id        string    `json:"id"`
+	Private   bool      `json:"private"`
+	CreatedAt time.Time `json:"createdAt"`
+	Name      string    `json:"name"`
 }
 
 type BinList struct {
@@ -17,10 +17,10 @@ type BinList struct {
 
 func newBin(id string, private bool, createdAt time.Time, name string) *Bin {
 	return &Bin{
-		id:        id,
-		private:   private,
-		createdAt: createdAt,
-		name:      name,
+		Id:        id,
+		Private:   private,
+		CreatedAt: createdAt,
+		Name:      name,
 	}
 }
 
